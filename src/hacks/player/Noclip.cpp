@@ -6,7 +6,6 @@
 #include <hacks/Hack.hpp>
 #include <LoadManager.hpp>
 #include <Geode/modify/PlayLayer.hpp>
-#include <Geode/modify/PlayerObject.hpp>
 
 namespace summit::hack::global {
   class Noclip : Hack {
@@ -19,6 +18,14 @@ namespace summit::hack::global {
         })));
       }
   };
+
+    class $modify(SMPlayLayer, PlayLayer) {
+        void destroyPlayer(PlayerObject* player, GameObject* object) override {
+          if (summit::Config::get<bool>("global.safemode", true)) {
+            if (object == m_anticheatSpike)
+                return PlayLayer::destroyPlayer(player, object);
+        }
+};
 
   $execute {
     LoadManager::onLoad([](){

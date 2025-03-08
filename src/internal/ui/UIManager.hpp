@@ -57,12 +57,20 @@ namespace summit::ui {
       Tab *m_tab = nullptr;
       std::string m_id = "";
       std::string m_label = "";
+      std::string m_desc = "";
+      std::map<std::string, Widget *> m_subWidgets = {};
+
       virtual void init(std::string id, std::string label);
     public:
       Overrides m_overrides = Overrides();
       virtual std::string getType() {return "Label";} // it's just easier to make the base a label  
       std::string getId();
       std::string getLabel();
+      std::string getDescription();
+      Widget *setDescription(std::string desc);
+      Widget *addSubWidget(Widget *widget);
+      Widget *getSubWidget(std::string id);
+      std::map<std::string, Widget *> getSubWidgets();
       Widget *setLabel(std::string label);
 
       static Widget *create(std::string id, std::string label);

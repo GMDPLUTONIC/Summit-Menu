@@ -98,6 +98,41 @@ namespace summit::ui {
     return ret;
   }
 
+
+  std::string Widget::getDescription() {
+    return m_desc;
+  }
+
+  Widget *Widget::setDescription(std::string desc) {
+    m_desc = desc;
+    return this;
+  }
+
+  // Widget *Widget::addSubWidget(Widget *widget) {
+  //   if (!widget) geode::log::error("(Widget {}) No subwidget provided.", m_id);
+  //   auto id = widget->getId();
+  //   if (m_subWidgets.contains(id)) {
+  //     geode::log::error("(Widget {}) Subwidget {} already added.", m_id, id);
+  //     return this;
+  //   }
+  //   m_subOrder.push_back(id);
+  //   m_subWidgets[id] = widget;
+  //   return this;
+  // }
+
+  // Widget *Widget::getSubWidget(std::string id) {
+  //   return m_subWidgets[id];
+  // }
+
+  // std::map<std::string, Widget *> Widget::getSubWidgets() {
+  //   return m_subWidgets;
+  // }
+
+  // std::vector<std::string> Widget::getSubOrder() {
+  //   return m_subOrder;
+  // }
+
+
   // Toggle Widget
 
   void ToggleWidget::init(std::string id, std::string label, bool toggled, std::function<void (bool toggled)> callback) {
@@ -132,6 +167,23 @@ namespace summit::ui {
     this->m_callback = callback;
     return this;
   }
+
+  ToggleWidget *ToggleWidget::setDescription(std::string desc) {
+    m_desc = desc;
+    return this;
+  }
+
+  // ToggleWidget *ToggleWidget::addSubWidget(Widget *widget) {
+  //   if (!widget) geode::log::error("(ToggleWidget {}) No subwidget provided.", m_id);
+  //   auto id = widget->getId();
+  //   if (m_subWidgets.contains(id)) {
+  //     geode::log::error("(ToggleWidget {}) Subwidget {} already added.", m_id, id);
+  //     return this;
+  //   }
+  //   m_subOrder.push_back(id);
+  //   m_subWidgets[id] = widget;
+  //   return this;
+  // }
 
 
   $onLoad(Initial, 0)  {

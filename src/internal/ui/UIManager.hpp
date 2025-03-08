@@ -58,7 +58,8 @@ namespace summit::ui {
       std::string m_id = "";
       std::string m_label = "";
       std::string m_desc = "";
-      std::map<std::string, Widget *> m_subWidgets = {};
+      // std::map<std::string, Widget *> m_subWidgets = {};
+      // std::vector<std::string> m_subOrder = {};
 
       virtual void init(std::string id, std::string label);
     public:
@@ -67,10 +68,12 @@ namespace summit::ui {
       std::string getId();
       std::string getLabel();
       std::string getDescription();
-      Widget *setDescription(std::string desc);
-      Widget *addSubWidget(Widget *widget);
       Widget *getSubWidget(std::string id);
-      std::map<std::string, Widget *> getSubWidgets();
+      // std::map<std::string, Widget *> getSubWidgets();
+      // std::vector<std::string> getSubOrder();
+
+      Widget *setDescription(std::string desc);
+      // Widget *addSubWidget(Widget *widget);
       Widget *setLabel(std::string label);
 
       static Widget *create(std::string id, std::string label);
@@ -89,6 +92,8 @@ namespace summit::ui {
       ToggleWidget *setToggled(bool value);
       std::function<void (bool toggled)> getCallback();
       ToggleWidget *setCallback(std::function<void (bool toggled)> callback);
+      ToggleWidget *setDescription(std::string desc);
+      // ToggleWidget *addSubWidget(Widget *widget);
 
       static ToggleWidget *create(std::string id, std::string label, bool toggled, std::function<void (bool toggled)> callback);
   };

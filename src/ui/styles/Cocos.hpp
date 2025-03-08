@@ -51,6 +51,9 @@ namespace summit::ui::styles {
       public:
         static LabelNode *create(Widget *widget);
         WidgetSize getWidgetSize();
+
+        void onDesc(CCObject *sender);
+        // void onSubWidgets(CCObject *sender);
     };
     class ToggleNode : public LabelNode {
       protected:
@@ -61,6 +64,8 @@ namespace summit::ui::styles {
         static ToggleNode *create(Widget *widget);
 
         void onToggle(cocos2d::CCObject *sender);
+        void onDesc(CCObject *sender);
+        // void onSubWidgets(CCObject *sender);
     };
   }
 }

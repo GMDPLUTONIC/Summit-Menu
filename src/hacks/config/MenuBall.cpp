@@ -7,7 +7,7 @@ namespace summit::hacks::config {
     public:
       std::string getId() override { return "config.showball"; }
       void init() override {
-        auto togggle = ui::ToggleWidget::create(getId(), "Show Menu Ball", Config::get("config.showball", false), [](bool toggled) {
+        auto toggle = ui::ToggleWidget::create(getId(), "Show Menu Ball", Config::get("config.showball", false), [](bool toggled) {
           Config::set("config.showball", toggled);
           auto ball = ui::MenuBall::get();
           if (toggled) {
@@ -16,7 +16,7 @@ namespace summit::hacks::config {
             ball->setRendered(false);
           }
         });
-        ui::UIManager::get()->getTab("Config")->addWidget(togggle);
+        ui::UIManager::get()->getTab("Config")->addWidget(toggle);
       }
   };
 

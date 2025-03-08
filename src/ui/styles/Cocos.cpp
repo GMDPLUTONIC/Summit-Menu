@@ -291,6 +291,11 @@ namespace summit::ui::styles {
       return nullptr;
     }
 
+    void LabelNode::onDesc(cocos2d::CCObject *sender) {
+      if (!m_widget) return geode::log::error("Failed to show description - no such widget.");
+      FLAlertLayer::create(m_widget->getLabel().c_str(), m_widget->getDescription(), "OK")->show();
+    }
+
     
     bool ToggleNode::init(Widget *widget) {
       if (widget->m_overrides.m_size == WidgetSize::DontChange)
@@ -311,17 +316,43 @@ namespace summit::ui::styles {
       m_buttonMenu->setID("button-menu");
       addChildAtPosition(m_buttonMenu, geode::Anchor::Center, {0, 0});
 
+      float offset = 0.f;
+
+      if (!widget->getDescription().empty()) {
+        auto descSpr = cocos2d::CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png");
+        descSpr->setScale(.65f);
+        auto descBtn = CCMenuItemSpriteExtra::create(
+            descSpr, this, menu_selector(ToggleNode::onDesc)
+        );
+        descBtn->setID("desc-btn");
+        m_buttonMenu->addChildAtPosition(descBtn, geode::Anchor::Right, {-12.625f - offset, 0});
+        offset += 18.f;
+      }
+
+
+      // if (!widget->getSubWidgets().empty()) {
+      //   auto swSpr = cocos2d::CCSprite::createWithSpriteFrameName("accountBtn_settings_001.png");
+      //   swSpr->setScale(.45f);
+      //   auto swBtn = CCMenuItemSpriteExtra::create(
+      //       swSpr, this, menu_selector(ToggleNode::onDesc)
+      //   );
+      //   swBtn->setID("sub-btn");
+      //   m_buttonMenu->addChildAtPosition(swBtn, geode::Anchor::Right, {-12.625f - offset, 0});
+      //   offset += 18.f;
+      // }
+
       m_toggle = CCMenuItemToggler::createWithStandardSprites(this, menu_selector(ToggleNode::onToggle), 1.f);
       m_toggle->setID("toggle");
       m_toggle->toggle(tw->isToggled());
       // Built in scale in create doesnt scale hitbox 💔
       m_toggle->setScale(.75f);
-      m_buttonMenu->addChildAtPosition(m_toggle, geode::Anchor::Right, {-17, 0});
+      m_buttonMenu->addChildAtPosition(m_toggle, geode::Anchor::Right, {-17 - offset, 0});
 
       m_label = cocos2d::CCLabelBMFont::create(widget->getLabel().c_str(), "chatFont.fnt");
-      m_label->limitLabelWidth(getContentWidth() - 35.f, 1.f, .05f);
+      m_label->limitLabelWidth(getContentWidth() - 35.f - offset, 1.f, .05f);
       m_label->setID("label");
-      addChildAtPosition(m_label, geode::Anchor::Center, {-13.5, 0});
+      m_label->setAnchorPoint({0.f, .5f});
+      addChildAtPosition(m_label, geode::Anchor::Left, {3.f, 0.f});
 
       return true;
     }
@@ -332,6 +363,11 @@ namespace summit::ui::styles {
       if (auto cb = m_widget->getCallback()) {
         cb(toggled);
       }
+    }
+
+    void ToggleNode::onDesc(cocos2d::CCObject *sender) {
+      if (!m_widget) return geode::log::error("Failed to show description - no such widget.");
+      FLAlertLayer::create(m_widget->getLabel().c_str(), m_widget->getDescription(), "OK")->show();
     }
     
     ToggleNode *ToggleNode::create(Widget *widget) {

@@ -46,7 +46,6 @@ namespace summit::keybinds {
 
 
   bool KeybindManager::checkBinds(Keys key, KeyStates state, int modifiers) {
-    geode::log::info("Checking binds for {} {} {}", nameForKey(key), (int) state, (int) modifiers);
     for (auto& bind : KeybindManager::get()->getKeybinds()) {
       int bindModifiers = 0;
       for (auto& mod : bind.second->m_modifiers) {

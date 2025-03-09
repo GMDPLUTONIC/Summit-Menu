@@ -10,9 +10,9 @@ namespace summit::hacks::global {
     public:
       std::string getId() override { return "global.safemode"; }
       void init() override {
-        auto t = ui::ToggleWidget::create(getId(), "Safe Mode (Still partly a Test)", Config::get("global.safemode", false), [](bool toggled) {
+        auto t = ui::ToggleWidget::create(getId(), "Safe Mode", Config::get("global.safemode", false), [](bool toggled) {
           Config::set("global.safemode", toggled);
-        });
+        })->setDescription("Prevents completing any level when enabled.");
         ui::UIManager::get()->getTab("Global")->addWidget(t);
       }
   };
@@ -42,8 +42,8 @@ namespace summit::hacks::global {
     }
 
     void levelComplete() {
-      bool sm = summit::Config::get<bool>("global.safemode", true);
-      if (summit::Config::get<bool>("global.safemode", true)) {
+      bool sm = summit::Config::get<bool>("global.safemode", false);
+      if (summit::Config::get<bool>("global.safemode", false)) {
         auto orig = m_isTestMode;
         m_isTestMode = true;
         PlayLayer::levelComplete();
@@ -53,13 +53,13 @@ namespace summit::hacks::global {
 
     void resetLevel() {
       PlayLayer::resetLevel();
-      if (summit::Config::get<bool>("global.safemode", true)) {
+      if (summit::Config::get<bool>("global.safemode", false)) {
         m_level->m_attempts = m_level->m_attempts - 1;
       }
     }
 
     void destroyPlayer(PlayerObject *p, GameObject *g) {
-      if (summit::Config::get<bool>("global.safemode", true)) {
+      if (summit::Config::get<bool>("global.safemode", false)) {
         auto orig = m_isTestMode;
         m_isTestMode = true;
         PlayLayer::destroyPlayer(p,g);
@@ -73,7 +73,7 @@ namespace summit::hacks::global {
 
   class $modify (SMPlayerObject, PlayerObject) {
     void incrementJumps() {
-      if (summit::Config::get<bool>("global.safemode", true)) {
+      if (summit::Config::get<bool>("global.safemode", false)) {
         return;
       }
       PlayerObject::incrementJumps();

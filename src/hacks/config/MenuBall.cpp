@@ -15,7 +15,7 @@ namespace summit::hacks::config {
           } else {
             ball->setRendered(false);
           }
-        });
+        })->setDescription("If the menu ball should show. (PC Exclusive)");
         ui::UIManager::get()->getTab("Config")->addWidget(toggle);
       }
   };

@@ -79,25 +79,25 @@ namespace summit::ui {
     m_moving = false;
 
     stopAllActions();
-    // #ifdef GEODE_IS_IOS
-    // runAction(cocos2d::CCEaseOut::create(
-    //     cocos2d::CCScaleTo::create(0.3f, m_scale * m_multiplier), 1.6f));
-    // #else
+    #ifdef GEODE_IS_IOS
+    runAction(cocos2d::CCEaseOut::create(
+        cocos2d::CCScaleTo::create(0.3f, m_scale * m_multiplier), 1.6f));
+    #else
     runAction(cocos2d::CCEaseSineOut::create(
         cocos2d::CCScaleTo::create(0.3f, m_scale * m_multiplier)));
-    // #endif
+    #endif
     return true;
   }
 
   void MenuBall::ccTouchEnded(cocos2d::CCTouch *touch, cocos2d::CCEvent *evt) {
     stopAllActions();
-    // #ifdef GEODE_IS_IOS
-    // runAction(cocos2d::CCEaseOut::create(
-    //     cocos2d::CCScaleTo::create(0.3f, m_scale), 1.6f));
-    // #else
+    #ifdef GEODE_IS_IOS
+    runAction(cocos2d::CCEaseOut::create(
+        cocos2d::CCScaleTo::create(0.3f, m_scale), 1.6f));
+    #else
     runAction(cocos2d::CCEaseSineOut::create(
         cocos2d::CCScaleTo::create(0.3f, m_scale)));
-    // #endif
+    #endif
     if (m_moving) {
       summit::Config::set<float>("config.ball-x", getPositionX());
       summit::Config::set<float>("config.ball-y", getPositionY());

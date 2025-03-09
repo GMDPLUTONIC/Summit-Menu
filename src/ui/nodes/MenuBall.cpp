@@ -6,6 +6,13 @@
 
 MenuBall *MenuBall::m_instance = nullptr;
 
+#include <Geode/modify/CCAction.hpp>
+class $modify(cocos2d::CCAction) {
+  void update(float f) {
+    geode::log::info("{}", f);
+  }
+};
+
 bool MenuBall::init() {
   if (!CCMenu::init())
     return false;
